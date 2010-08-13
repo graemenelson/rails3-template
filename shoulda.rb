@@ -11,6 +11,7 @@ create_file ".rvmrc", rvmrc
 # remove_dir "lib/generators/.git"
 
 gem "haml", ">= 3.0.12"                      
+gem "devise", ">= 1.1.1"
 gem "shoulda", ">= 2.11.2", :group => :test
 gem "factory_girl_rails", ">= 1.0.0", :group => :test
 
@@ -69,9 +70,10 @@ docs = <<-DOCS
 Run the following commands to complete the setup of #{app_name.humanize}:
 
 % cd #{app_name}
-% gem install bundler
+% gem install bundler --version '>= 1.0.0.rc.1'
 % bundle install
-% bundle lock
+% bundle lock 
+% rails g devise:install
 % script/rails generate rspec:install
 
 DOCS
