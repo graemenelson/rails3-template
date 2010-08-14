@@ -5,6 +5,8 @@ Rails 3 Application Template
 
 A rails 3 application template to set up authentication, testing, and template frameworks.  The authentication system uses [devise](http://github.com/plataformatec/devise) for the basic authentication support. The testing framework used is [shoulda](http://github.com/thoughtbot/shoulda) with [factory girl](http://github.com/thoughtbot/factory_girl_rails) and [mocha](http://github.com/floehopper/mocha) support. [HAML](http://haml-lang.com/) is used as the templating engine, with initial [SASS](http://sass-lang.com/) support for the css. [Formtastic](http://github.com/justinfrench/formtastic) is included for pretty forms support.    
 
+[JQuery](http://jquery.com/) is used as the default javascript library.
+
 The template also include [gemset](http://rvm.beginrescueend.com/gemsets/) support for [rvm](http://rvm.beginrescueend.com/).
 
 Credit: This template is based off of [Les Hill Template](http://github.com/leshill/rails3-app/raw/master/app.rb).
