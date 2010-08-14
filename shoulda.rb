@@ -43,12 +43,24 @@ remove_file     "public/javascripts/*"
 # Let's setup our gems used in all environments
 gem "haml", ">= 3.0.12"                      
 gem "devise", ">= 1.1.1"
+gem 'formtastic', :git => "http://github.com/justinfrench/formtastic.git", :branch => "rails3"
 
 # Let's setup the gems we only need for testing
 gem "shoulda", ">= 2.11.2", :group => :test
 gem "factory_girl_rails", ">= 1.0.0", :group => :test
 gem "mocha", ">= 0.9.8", :group => :test
 
+# Let's get the generators we want from rails generator, factory_girl, shoulda
+git :clone => "--depth 0 http://github.com/indirect/rails3-generators.git"
+empty_directory "lib"
+run             "cp -r rails3-generators/lib/generators lib"
+remove_file     "rails3-generators"
+
+generators_to_keep = %w(factory_girl formtastic haml helpers jquery shoulda)
+Dir["lib/generators/*"].each do |file|
+  basename = File.basename(file, ".rb")
+  remove_file file unless generators_to_keep.include?( basename )
+end
 
 # Let's setup the generators.
 # 
@@ -138,3 +150,4 @@ Run the following commands to complete the setup of #{app_name.humanize}:
 DOCS
 
 log docs
+  
