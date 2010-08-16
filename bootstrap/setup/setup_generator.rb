@@ -17,7 +17,7 @@ module Bootstrap
                 
         # TODO: need to add a root path, for admin it should go to dashboard???
         # see: http://wiki.github.com/plataformatec/devise/howto-redirect-to-a-specific-page-on-successful-sign-in
-        route = <<-ROUTE
+        route = %Q{
           Rails3Shoulda::Application.routes.draw do
             devise_for :#{resource}, :path_names => { :sign_in => 'signin', :sign_out => 'signout', :sign_up => 'signup' }
             as :#{resource.singularize} do
@@ -25,8 +25,8 @@ module Bootstrap
               get "/signin" => "devise/sessions#new"
               get "/signout" => "devise/sessions#destroy"
             end            
-          end
-        ROUTE
+          end          
+        }
         
         remove_file "config/routes.rb"
         create_file "config/routes.rb", route
