@@ -71,7 +71,7 @@ Dir["lib/generators/*"].each do |file|
 end
 
 # Let's get out bootstrapping generator
-git :clone => "--depth 0 http://github.com/graemenelson/rails3-template"
+git :clone => "--depth 0 http://github.com/graemenelson/rails3-template.git"
 run "cp -r rails3-template/bootstrap* lib/generators"
 remove_file "rails3_template"
 
