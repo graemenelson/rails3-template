@@ -13,23 +13,10 @@ module Bootstrap
         generate "devise #{name}"        
         generate "formtastic:install"
         
-        resource = name.tableize
-                
-        # TODO: need to add a root path, for admin it should go to dashboard???
-        # see: http://wiki.github.com/plataformatec/devise/howto-redirect-to-a-specific-page-on-successful-sign-in
-        route = %Q{
-          Rails3Shoulda::Application.routes.draw do
-            devise_for :#{resource}, :path_names => { :sign_in => 'signin', :sign_out => 'signout', :sign_up => 'signup' }
-            as :#{resource.singularize} do
-              get "/signup" => "devise/registrations#new"
-              get "/signin" => "devise/sessions#new"
-              get "/signout" => "devise/sessions#destroy"
-            end            
-          end          
-        }
+        @resource = name.tableize
         
         remove_file "config/routes.rb"
-        create_file "config/routes.rb", route
+        template "config/routes.rb", "config/routes.rb"
                                            
         # devise forms with formtastic support.
         run "cp -r #{self.class.source_root}/devise #{Rails.root}/app/views/"
