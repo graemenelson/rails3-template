@@ -16,6 +16,7 @@ module Bootstrap
         resource = name.tableize
                 
         # TODO: need to add a root path, for admin it should go to dashboard???
+        # see: http://wiki.github.com/plataformatec/devise/howto-redirect-to-a-specific-page-on-successful-sign-in
         route = <<-ROUTE
           devise_for :#{resource}, :path_names => { :sign_in => 'signin', :sign_out => 'signout' }
           as :#{resource.singularize} do

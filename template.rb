@@ -70,6 +70,14 @@ Dir["lib/generators/*"].each do |file|
   remove_file file unless generators_to_keep.include?( basename )
 end
 
+# Let's get out bootstrapping generator
+git :clone => "--depth 0 http://github.com/graemenelson/rails3-template"
+run "cp -r rails3-template/bootstrap* lib/generators"
+remove_file "rails3_template"
+
+# let's get rid of any .git directory in the lib/generators
+remove_dir "lib/generators/.git"
+
 # Let's setup the generators.
 # 
 # Template        -- HAML
