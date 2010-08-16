@@ -18,6 +18,8 @@
 #
 #   * Google Fonts???
 #
+#   * Look at including http://github.com/himmel/html5-boilerplate
+#
 # Graeme Nelson, 2010
 
 # If we are running rvm, lets create a new gemset based on 
@@ -48,7 +50,13 @@ gem 'formtastic', :git => "http://github.com/justinfrench/formtastic.git", :bran
 # Let's setup the gems we only need for testing
 gem "shoulda", ">= 2.11.2", :group => :test
 gem "factory_girl_rails", ">= 1.0.0", :group => :test
-gem "mocha", ">= 0.9.8", :group => :test
+gem "mocha", ">= 0.9.8", :group => :test 
+gem 'cover_me', '>= 1.0.0.pre1', :require => false, :group => :test
+
+# add cover_me to the test/test_helper.rb, if we add more things to the test_helper.rb
+# we might want to consider overwriting the file since there isn't much in the default
+# version.
+gsub_file("test/test_helper.rb", "require 'rails/test_help'", "require 'rails/test_help'\nrequire 'cover_me'")
 
 # Let's get the generators we want from rails generator, factory_girl, shoulda
 git :clone => "--depth 0 http://github.com/indirect/rails3-generators.git"
@@ -145,7 +153,7 @@ Run the following commands to complete the setup of #{app_name.humanize}:
 % cd #{app_name}
 % gem install bundler --version '>= 1.0.0.rc.1'
 % bundle install
-% rails g app:setup
+% rails g bootstrap:setup
 
 DOCS
 
