@@ -13,8 +13,8 @@ module Bootstrap
         generate "devise #{name}"        
         generate "formtastic:install"
         
-        @resource = name.tableize
-        
+        # let's set up the routes
+        @resource = name.tableize        
         remove_file "config/routes.rb"
         template "config/routes.rb", "config/routes.rb"
                                            
