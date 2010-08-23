@@ -5,7 +5,10 @@ Rails3Shoulda::Application.routes.draw do
     get "/signup" => "devise/registrations#new"
     get "/signin" => "devise/sessions#new"
     get "/signout" => "devise/sessions#destroy"
-  end            
+  end
+
+  # the default root path used by devise.
+  match '/account', :to => "<%= @resource %>#show", :as => "<%= @resource.singularize %>_root"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

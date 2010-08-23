@@ -1,0 +1,10 @@
+<% singular = @resource.singularize %>
+en:
+  activerecord:
+    models:
+      <%= singular %>: <%= singular.titleize %>
+    attributes:
+      <%= singular %>:
+        email: "Email"
+        password: "Password"
+        password_confirmation: "Re-type Password"

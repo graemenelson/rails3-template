@@ -44,24 +44,23 @@ remove_file     "public/javascripts/*"
 
 # Let's setup our gems used in all environments
 gem "haml", ">= 3.0.12"                      
-gem "devise", ">= 1.1.1"
+gem "devise", :git => "git://github.com/plataformatec/devise.git"
 gem 'formtastic', :git => "http://github.com/justinfrench/formtastic.git", :branch => "rails3"
 
 # Let's setup the gems we only need for testing
 gem "shoulda", ">= 2.11.2", :group => :test
 gem "factory_girl_rails", ">= 1.0.0", :group => :test
 gem "mocha", ">= 0.9.8", :group => :test 
-gem 'cover_me', '>= 1.0.0.pre1', :require => false, :group => :test
 
 # add cover_me to the test/test_helper.rb, if we add more things to the test_helper.rb
 # we might want to consider overwriting the file since there isn't much in the default
 # version.
-gsub_file("test/test_helper.rb", "require 'rails/test_help'", "require 'rails/test_help'\nrequire 'cover_me'")
+# gsub_file("test/test_helper.rb", "require 'rails/test_help'", "require 'rails/test_help'\nrequire 'cover_me'")
 
 # Let's get the generators we want from rails generator, factory_girl, shoulda
 git :clone => "--depth 0 http://github.com/indirect/rails3-generators.git"
 empty_directory "lib"
-run             "cp -r rails3-generators/lib/generators lib"
+run             "cp -R rails3-generators/lib/generators lib"
 remove_file     "rails3-generators"
 
 generators_to_keep = %w(factory_girl formtastic haml helpers jquery shoulda)
@@ -72,7 +71,7 @@ end
 
 # Let's get out bootstrapping generator
 git :clone => "--depth 0 http://github.com/graemenelson/rails3-template.git"
-run "cp -r rails3-template/bootstrap* lib/generators"
+run "cp -R rails3-template/bootstrap* lib/generators"
 remove_file "rails3_template"
 
 # let's get rid of any .git directory in the lib/generators
@@ -84,12 +83,17 @@ remove_dir "lib/generators/.git"
 # Test Framework  -- Shoulda & Mocha
 # Fixtures        -- Factory
 generators = <<-GENERATORS
+
     config.generators do |g|
       g.template_engine     :haml
       g.test_framework      :shoulda, :fixture => true, :views => false
       g.fixture_replacement :factory_girl, :dir => "test/factories"
       g.mock_with           :mocha
     end
+    
+    # Setup the I18n to allow for nested config files
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+    
 GENERATORS
 
 application generators
@@ -133,7 +137,7 @@ layout = <<-LAYOUT
     = stylesheet_link_tag :all
     = javascript_include_tag :defaults
     = csrf_meta_tag
-  %body
+  %body{ :id => controller_name, :class => action_name }
     = yield
 LAYOUT
 

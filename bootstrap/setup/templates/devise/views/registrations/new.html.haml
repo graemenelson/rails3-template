@@ -1,0 +1,10 @@
+= page_header
+= semantic_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |form|
+  = devise_error_messages!
+  = form.inputs do
+    = form.input :email
+    = form.input :password
+    = form.input :password_confirmation
+  = form.buttons do
+    = form.commit_button
+= render :partial => "devise/shared/links"

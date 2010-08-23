@@ -1,0 +1,6 @@
+en:
+  registrations:
+    new:
+      header: "Sign Up"
+    edit:
+      header: "Edit Your Account"
