@@ -1,6 +1,10 @@
 en:
   registrations:
-    new:
+    new: &NEW_REGISTRATION
       header: "Sign Up"
+      buttons:
+        commit: "Create Your Account"
     edit:
       header: "Edit Your Account"
+    create:
+      <<: *NEW_REGISTRATION

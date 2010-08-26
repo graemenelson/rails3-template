@@ -13,7 +13,6 @@ module Bootstrap
         setup_initial_configuration
         setup_initial_tests
         setup_initial_application
-        setup_initial_application_data
         overwrite_devise_settings
                                            
         # TODO: update other devise templates to use Formtastic
@@ -34,7 +33,6 @@ module Bootstrap
         generate "devise:install", "installing devise"
         generate "devise #{name}"        
         generate "formtastic:install"  
-        run "haml --rails #{Rails.root}"
       end  
       
       # setups the initial configuration files, such as routes and locales
@@ -50,7 +48,7 @@ module Bootstrap
           run "cp -R #{self.class.source_root}/config/locales/#{dir} #{Rails.root}/config/locales/#{dir}"
         end 
         run "mkdir #{Rails.root}/config/locales/models"
-        run "mkdir #{Rails.root}/config/locales/#{@resource.singularize}"
+        #run "mkdir #{Rails.root}/config/locales/#{@resource.singularize}"
         template "config/locales/models/resource/en.yml", "config/locales/models/#{@resource.singularize}/en.yml"
         run "mv #{Rails.root}/config/locales/devise.en.yml #{Rails.root}/config/locales/defaults/devise.en.yml"
       end  
@@ -68,6 +66,8 @@ module Bootstrap
           template "devise/test/functional/devise/#{filename}", "test/functional/devise/#{filename}"
         end
         
+        template "devise/test/integration/resource_stories_test.rb", "test/integration/#{@resource.singularize}_stories_test.rb"
+        
         remove_file "test/test_helper.rb"
         template "devise/test/test_helper.rb", "test/test_helper.rb"
       end
@@ -77,27 +77,38 @@ module Bootstrap
       def setup_initial_application         
         remove_file "#{Rails.root}/app/helpers/application_helper.rb"
         template "app/helpers/application_helper.rb", "app/helpers/application_helper.rb"
+                                                                                        
+        run "mkdir #{Rails.root}/app/mailers"
         
         template "app/controllers/resources_controller.rb", "app/controllers/#{@resource}_controller.rb"
         template "app/views/resources/show.html.haml", "app/views/#{@resource}/show.html.haml"
+        template "app/models/resource_observer.rb", "app/models/#{@resource.singularize}_observer.rb"
         template "app/helpers/resources_helper.rb", "app/helpers/#{@resource}_helper.rb"      
+        template "app/mailers/resource_mailer.rb", "app/mailers/#{@resource.singularize}_mailer.rb"
+        template "app/views/resource_mailer/welcome.html.haml", "app/views/#{@resource.singularize}_mailer/welcome.html.haml"
+
+app_config = <<-APPCONFIG
+  
+    # add an observer for the #{@resource.singularize.camelize} model
+    config.active_record.observers = :#{@resource.singularize}_observer
+
+    # default url options for action mailer, overwrite this in the production environment
+    config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+    
+    # Setup the I18n to allow for nested config files
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]      
+APPCONFIG
         
+        application app_config
         rake "db:migrate"       
       end
       
       def overwrite_devise_settings
-        gsub_file "config/initializers/devise.rb", "# config.scoped_views = true", "config.scoped_views = true"
-        run "cp -R #{self.class.source_root}/devise/views/* #{Rails.root}/app/views/#{@resource}/"
+        gsub_file "config/initializers/devise.rb", "# config.scoped_views = false", "config.scoped_views = true"
+        gsub_file "config/initializers/devise.rb", "# config.default_scope = :user", "config.default_scope = :#{@resource.singularize}"
+        run "cp -R #{self.class.source_root}/devise/views #{Rails.root}/app/views/devise"
       end 
 
-      # setups initial application data
-      # TODO: need to add super_user/admin role, after we add CanCan      
-      def setup_initial_application_data
-        email     = options[:email]
-        password  = options[:password]
-        admin = "#{@resource.singularize.camelize}.create!(:email => '#{email}', :password => '#{password}', :password_confirmation => '#{password}')"
-        run "rails runner \"#{admin}\""        
-      end
       
     end
   end

@@ -3,9 +3,9 @@
   = devise_error_messages!
   = form.inputs do
     = form.input :email
+    = form.input :current_password, :required => true
     = form.input :password
-    = form.input :password_confirmation
-    = form.input :current_password
+    = form.input :password_confirmation    
   = form.buttons do
     = form.commit_button
 

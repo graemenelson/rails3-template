@@ -83,17 +83,13 @@ remove_dir "lib/generators/.git"
 # Test Framework  -- Shoulda & Mocha
 # Fixtures        -- Factory
 generators = <<-GENERATORS
-
+    
     config.generators do |g|
       g.template_engine     :haml
       g.test_framework      :shoulda, :fixture => true, :views => false
       g.fixture_replacement :factory_girl, :dir => "test/factories"
       g.mock_with           :mocha
-    end
-    
-    # Setup the I18n to allow for nested config files
-    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
-    
+    end        
 GENERATORS
 
 application generators
