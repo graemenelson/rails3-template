@@ -1,0 +1,6 @@
+en:
+  sessions:
+    new:
+      header: "Sign Into Your Account"
+      buttons:
+        commit: "Sign In"

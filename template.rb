@@ -69,7 +69,7 @@ Dir["lib/generators/*"].each do |file|
   remove_file file unless generators_to_keep.include?( basename )
 end
 
-# Let's get out bootstrapping generator
+# Let's checkout the bootstrapping generator
 git :clone => "--depth 0 http://github.com/graemenelson/rails3-template.git"
 run "cp -R rails3-template/bootstrap* lib/generators"
 remove_file "rails3_template"
@@ -139,7 +139,7 @@ LAYOUT
 
 remove_file "app/views/layouts/application.html.erb"
 create_file "app/views/layouts/application.html.haml", layout
-
+create_file "app/views/layouts/public.html.haml", layout
 
 # Setup our GIT settings.
 create_file "log/.gitkeep"

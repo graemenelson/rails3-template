@@ -75,6 +75,8 @@ module Bootstrap
       # setups the initial application, this includes moving over default
       # views and support classes.
       def setup_initial_application         
+        remove_file "#{Rails.root}/app/controllers/application_controller.rb"
+        template "app/controllers/application_controller.rb", "app/controllers/application_controller.rb"
         remove_file "#{Rails.root}/app/helpers/application_helper.rb"
         template "app/helpers/application_helper.rb", "app/helpers/application_helper.rb"
                                                                                         

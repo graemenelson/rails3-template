@@ -1,9 +1,10 @@
+<% singular = @resource.singularize -%>
 %p
   Thanks for Joining #{@site_name}!
   %br
   Your account login is: #{@email}
   %br
-  You can access your account at: #{link_to(account_root_url,account_root_url)}
+  You can access your account at: #{link_to(<%= singular %>_root_url,<%= singular %>_root_url)}
   %br
   If the above URL does not work try copying and pasting it into your browser.  If you continue to have problem please feel free to contact us.
   %br

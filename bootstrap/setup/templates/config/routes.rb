@@ -10,7 +10,7 @@ Rails3Shoulda::Application.routes.draw do
   end
 
   # the default <%= @resource.singularize %> root path used by devise.
-  match '/account', :to => "<%= @resource %>#show", :as => "<%= @resource.singularize %>_root"
+  match '/<%= @resource.singularize %>', :to => "<%= @resource %>#show", :as => "<%= @resource.singularize %>_root"
 
   # makes the / path redirect to devise signin page
   root :to => 'devise/sessions#new'

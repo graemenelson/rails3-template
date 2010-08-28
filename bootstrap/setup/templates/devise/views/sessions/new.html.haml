@@ -1,4 +1,4 @@
-%h2 Sign in
+= page_header
 = semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |form|
   = form.inputs do     
     = form.input :email
@@ -6,6 +6,6 @@
     - if devise_mapping.rememberable?
       = form.input :remember_me, :as => :boolean
   = form.buttons do
-    = form.commit_button
+    = form.commit_button :label => t('sessions.new.buttons.commit')
   
 = render :partial => "devise/shared/links"

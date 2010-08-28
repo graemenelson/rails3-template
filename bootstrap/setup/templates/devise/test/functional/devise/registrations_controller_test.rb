@@ -5,12 +5,6 @@ class Devise::RegistrationsControllerTest < ActionController::TestCase
 
   setup :fix_devise_registrations_authenticate_scope
   
-  context "routes" do
-        
-    should route(:get, '/<%= @resource %>/signup').to(:controller => 'devise/registrations', :action => 'new')        
-        
-  end
-  
   context "new" do
     
     context "without an authenticated <%= singular %>" do
@@ -19,7 +13,8 @@ class Devise::RegistrationsControllerTest < ActionController::TestCase
         get :new
       end
          
-      should render_template(:new)
+      should render_template(:new) 
+      should render_with_layout(:public)
 
       should "render appropriate view elements" do
         assert_select "body#registrations.new" do
@@ -44,7 +39,7 @@ class Devise::RegistrationsControllerTest < ActionController::TestCase
             assert_select "fieldset.buttons" do
               assert_select "ol" do
                 assert_select "li.commit" do
-                  assert_select "input[type='submit'][value='Create #{<%= singular.titleize %>}']"
+                  assert_select "input[type='submit'][value='Create <%= singular.titleize %>']"
                 end
               end
             end
@@ -60,6 +55,17 @@ class Devise::RegistrationsControllerTest < ActionController::TestCase
         end        
       end      
     end
+   
+    context "with an authenticated <%= singular %>" do
+    
+      setup do
+        sign_in( Factory.create(:<%= singular %>) )
+        get :new
+      end
+      
+      should redirect_to("<%= singular %> path") { <%= singular %>_root_path }
+            
+    end   
     
   end
   
@@ -83,6 +89,7 @@ class Devise::RegistrationsControllerTest < ActionController::TestCase
       end
       
       should render_template(:new)
+      should render_with_layout(:public)
       
       should "render appropriate view elements" do
         assert_select "body#registrations.create" do
@@ -110,7 +117,7 @@ class Devise::RegistrationsControllerTest < ActionController::TestCase
             assert_select "fieldset.buttons" do
               assert_select "ol" do
                 assert_select "li.commit" do
-                  assert_select "input[type='submit'][value='Create #{<%= singular.titleize %>}']"
+                  assert_select "input[type='submit'][value='Create <%= singular.titleize %>']"
                 end
               end
             end
@@ -179,7 +186,7 @@ class Devise::RegistrationsControllerTest < ActionController::TestCase
             assert_select "fieldset.buttons" do
               assert_select "ol" do
                 assert_select "li.commit" do
-                  assert_select "input[type='submit'][value='Update #{<%= singular.titleize %>}']"
+                  assert_select "input[type='submit'][value='Update <%= singular.titleize %>']"
                 end
               end
             end
