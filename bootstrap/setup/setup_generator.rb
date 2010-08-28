@@ -4,8 +4,6 @@ module Bootstrap
   module Generators
     class SetupGenerator < Base
       desc "Description:\n  Sets up the initial application with devise as the underlying authentication system."
-      class_option :email,    :type => :string, :default => "admin@site.com", :desc => "The initial admin account email"
-      class_option :password, :type => :string, :default => "password", :desc => "The initial admin account password"      
                                  
       def install
         @resource = name.tableize
@@ -13,12 +11,7 @@ module Bootstrap
         setup_initial_configuration
         setup_initial_tests
         setup_initial_application
-        overwrite_devise_settings
-                                           
-        # TODO: update other devise templates to use Formtastic
-        # TODO: setup i18n file for Formtastic                 
-        # TODO: perhaps break this up into separate methods
-        
+        overwrite_devise_settings        
         rake "test"
       end
       
