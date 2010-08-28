@@ -134,29 +134,50 @@ class Devise::PasswordsControllerTest < ActionController::TestCase
    end
 
    context "update" do
+     
+     setup do
+       @<%= singular %> = Factory.create(:<%= singular %>)
+       @<%= singular %>.update_attribute(:reset_password_token, "secrettoken")
+       @current_encrypted_password = @<%= singular %>.encrypted_password
+     end
 
-     context "with authenticated account" do
-
-       context "with valid password and password confirmation" do
-
-         should "change password"
-
+     context "with valid password and password confirmation" do
+       
+       setup do
+         put :update, :<%= singular %> => {:reset_password_token => @<%= singular %>.reset_password_token, :password => "mynewpassword", :password_confirmation => "mynewpassword"}
        end
 
-       context "with invalid password and password confirmation" do
-
-         should "edit template with errors"
-
+       should "change password" do
+         assert_not_equal @current_encrypted_password, @<%= singular %>.reload.encrypted_password
        end
        
-       context "with invalid reset password token" do
-       
-         should "render update template with errors"
-         
-       end
+       should redirect_to( "<%= singular %> root path" ) { <%= singular %>_root_path }
 
      end
 
-   end   
+     context "with invalid password and password confirmation" do
+       
+       setup do
+         put :update, :<%= singular %> => {:reset_password_token => @<%= singular %>.reset_password_token, :password => "mynewpassword", :password_confirmation => "blah"}
+       end
+       
+       should render_template(:edit)
+       should render_with_layout(:application)
+
+     end
+     
+     context "with invalid reset password token" do
+       
+       setup do
+         put :update, :<%= singular %> => {:reset_password_token => "", :password => "mynewpassword", :password_confirmation => "mynewpassword"}         
+       end
+     
+       should render_template(:edit)
+       should render_with_layout(:application)
+       
+     end
+
+   end
+
   
 end
