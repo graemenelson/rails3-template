@@ -1,5 +1,3 @@
-**NOTE:** This is a work in progress at this time...
-
 Rails 3 Application Template
 ============================
 
@@ -19,6 +17,22 @@ Assuming you have Rails 3 RC installed, you can run the following command.
     rails new appname -m http://github.com/graemenelson/rails3-template/raw/master/template.rb
                   
 And a new Rails 3 application will be built and placed in the directory given by *appname*. Follow the given steps, and you are ready to go.
-  
+                                     
+Next Steps
+------------------------------
+
+After the initial template is created, you can run the following command from within your application directory:
+
+    rails g rails g bootstrap:setup ModelName
+    
+Where *ModelName* is the name you want to give to the user model in your system.  For example, if you want to use *Account* model then use the following command:
+
+    rails g bootstrap:setup Account
+    
+If you want to use *AdminUser*, then you can use:
+
+    rails g bootstrap:setup AdminUser
+    
+
                                                                                   
 
