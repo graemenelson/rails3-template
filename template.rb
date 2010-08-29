@@ -161,7 +161,7 @@ Run the following commands to complete the setup of #{app_name.humanize}:
 % cd #{app_name}
 % gem install bundler --version '>= 1.0.0.rc.1'
 % bundle install
-% rails g bootstrap:setup
+% rails g bootstrap:setup <ModelName>
 
 DOCS
 
