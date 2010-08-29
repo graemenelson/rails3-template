@@ -31,8 +31,28 @@ module Bootstrap
       # setups the initial configuration files, such as routes and locales
       # see templates/config/routes.rb
       def setup_initial_configuration
-        remove_file "config/routes.rb"
-        template "config/routes.rb", "config/routes.rb"        
+        #remove_file "config/routes.rb"
+        #template "config/routes.rb", "config/routes.rb"
+
+route_config = <<-ROUTECONFIG
+  devise_for :<%= @resource %>, :path_names => { :sign_in => 'signin', :sign_out => 'signout', :sign_up => 'signup' }
+  as :<%= @resource.singularize %> do
+    get "/signup" => "devise/registrations#new"
+    get "/signin" => "devise/sessions#new"
+    get "/signout" => "devise/sessions#destroy"
+    get "/<%= @resource.singularize %>/edit" => "devise/registrations#edit"
+    get "/" => "devise/sessions#new"    
+  end
+
+  # the default <%= @resource.singularize %> root path used by devise.
+  match '/<%= @resource.singularize %>', :to => "<%= @resource %>#show", :as => "<%= @resource.singularize %>_root"
+
+  # makes the / path redirect to devise signin page
+  root :to => 'devise/sessions#new'
+ROUTECONFIG        
+        
+        route route_config
+                
         remove_file "#{Rails.root}/config/locales/en.yml"
         
         # TODO: need to use template so we can substitute resource name
