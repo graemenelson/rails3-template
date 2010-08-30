@@ -38,14 +38,11 @@ remove_file     "public/index.html"
 remove_file     "public/images/rails.png"
 remove_file     "public/javascripts/*"
 
-# empty_directory "lib/generators"
-# git :clone => "--depth 0 http://github.com/leshill/rails3-app.git lib/generators"
-# remove_dir "lib/generators/.git"
-
 # Let's setup our gems used in all environments
-gem "haml", ">= 3.0.12"                      
+gem "haml", ">= 3.0.18"
 gem "devise", :git => "git://github.com/plataformatec/devise.git"
-gem 'formtastic', :git => "http://github.com/justinfrench/formtastic.git", :branch => "rails3"
+gem 'formtastic', :git => "git://github.com/justinfrench/formtastic.git", :branch => "rails3" 
+gem 'compass'
 
 # Let's setup the gems we only need for testing
 gem "shoulda", ">= 2.11.2", :group => :test
@@ -72,7 +69,7 @@ end
 # Let's checkout the bootstrapping generator
 git :clone => "--depth 0 http://github.com/graemenelson/rails3-template.git"
 run "cp -R rails3-template/bootstrap* lib/generators"
-remove_file "rails3_template"
+remove_file "rails3_template"                        
 
 # let's get rid of any .git directory in the lib/generators
 remove_dir "lib/generators/.git"
@@ -101,25 +98,11 @@ get "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js", "pub
 get "http://github.com/rails/jquery-ujs/raw/master/src/rails.js", "public/javascripts/rails.js"
                       
 # setup the stylesheets
-empty_directory "public/stylesheets/sass"
+# empty_directory "public/stylesheets/sass"
 
-# setup our new javascript files as the
-# default javascript sources.  This is
-# used by, javascript_include_tag :defaults 
-if Rails::VERSION::STRING =~ /beta/
-  jquery = <<-JQUERY
-module ActionView::Helpers::AssetTagHelper
-  remove_const :JAVASCRIPT_DEFAULT_SOURCES
-  JAVASCRIPT_DEFAULT_SOURCES = %w(jquery.js jquery-ui.js rails.js)
+# set the default javascript to jquery.
+gsub_file 'config/application.rb', '# config.action_view.javascript_expansions[:defaults] = %w(jquery rails)', 'config.action_view.javascript_expansions[:defaults] = %w(jquery rails)'
 
-  reset_javascript_include_default
-end
-  JQUERY
-
-  initializer "jquery.rb", jquery
-else
-  gsub_file 'config/application.rb', 'config.action_view.javascript_expansions[:defaults] = %w()', 'config.action_view.javascript_expansions[:defaults] = %w(jquery.js jquery-ui.js rails.js)'
-end
 
 #
 #  NOTE: need to add flash message partial, and also create a public view using the same layout
@@ -130,7 +113,10 @@ layout = <<-LAYOUT
 %html
   %head
     %title #{app_name.humanize}
-    = stylesheet_link_tag :all
+    = stylesheet_link_tag 'compiled/screen.css', :media => 'screen, projection'
+    = stylesheet_link_tag 'compiled/print.css', :media => 'print'
+    /[if lt IE 8]
+      = stylesheet_link_tag 'compiled/ie.css', :media => 'screen, projection'
     = javascript_include_tag :defaults
     = csrf_meta_tag
   %body{ :id => controller_name, :class => action_name }
@@ -159,7 +145,7 @@ docs = <<-DOCS
 Run the following commands to complete the setup of #{app_name.humanize}:
 
 % cd #{app_name}
-% gem install bundler --version '>= 1.0.0.rc.1'
+% gem install bundler --version '>= 1.0.0'
 % bundle install
 % rails g bootstrap:setup <ModelName>
 

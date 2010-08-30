@@ -11,8 +11,16 @@ module Bootstrap
         setup_initial_configuration
         setup_initial_tests
         setup_initial_application
-        overwrite_devise_settings        
-        rake "test"
+        overwrite_devise_settings                
+        rake "test"  
+
+next_steps = <<-NEXTSTEPS
+Congratulations, your application is almost ready.  Run the following steps, answering Y to all questions.
+  
+% compass init rails #{Rails.root} --using blueprint/semantic 
+NEXTSTEPS
+
+        log next_steps
       end
       
       def self.banner
