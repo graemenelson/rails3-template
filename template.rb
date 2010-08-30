@@ -55,7 +55,7 @@ gem "mocha", ">= 0.9.8", :group => :test
 # gsub_file("test/test_helper.rb", "require 'rails/test_help'", "require 'rails/test_help'\nrequire 'cover_me'")
 
 # Let's get the generators we want from rails generator, factory_girl, shoulda
-git :clone => "--depth 0 http://github.com/indirect/rails3-generators.git"
+git :clone => "--depth 0 git://github.com/indirect/rails3-generators.git"
 empty_directory "lib"
 run             "cp -R rails3-generators/lib/generators lib"
 remove_file     "rails3-generators"
@@ -67,7 +67,7 @@ Dir["lib/generators/*"].each do |file|
 end
 
 # Let's checkout the bootstrapping generator
-git :clone => "--depth 0 http://github.com/graemenelson/rails3-template.git"
+git :clone => "--depth 0 git://github.com/graemenelson/rails3-template.git"
 run "cp -R rails3-template/bootstrap* lib/generators"
 remove_file "rails3_template"                        
 
