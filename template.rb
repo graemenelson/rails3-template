@@ -40,6 +40,7 @@ remove_file     "public/javascripts/*"
 
 # Let's setup our gems used in all environments
 gem "haml", ">= 3.0.18"
+gem "haml-rails"
 gem "devise", :git => "git://github.com/plataformatec/devise.git"
 gem 'formtastic', :git => "git://github.com/justinfrench/formtastic.git", :branch => "rails3" 
 
@@ -59,11 +60,12 @@ empty_directory "lib"
 run             "cp -R rails3-generators/lib/generators lib"
 remove_file     "rails3-generators"
 
-generators_to_keep = %w(factory_girl formtastic haml helpers jquery shoulda)
+generators_to_keep = %w(factory_girl formtastic helpers jquery shoulda)
 Dir["lib/generators/*"].each do |file|
   basename = File.basename(file, ".rb")
   remove_file file unless generators_to_keep.include?( basename )
 end
+
 
 # Let's checkout the bootstrapping generator
 git :clone => "--depth 0 git://github.com/graemenelson/rails3-template.git"
