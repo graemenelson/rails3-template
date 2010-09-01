@@ -42,7 +42,6 @@ remove_file     "public/javascripts/*"
 gem "haml", ">= 3.0.18"
 gem "devise", :git => "git://github.com/plataformatec/devise.git"
 gem 'formtastic', :git => "git://github.com/justinfrench/formtastic.git", :branch => "rails3" 
-gem 'compass'
 
 # Let's setup the gems we only need for testing
 gem "shoulda", ">= 2.11.2", :group => :test
@@ -74,6 +73,13 @@ remove_file "rails3_template"
 # let's get rid of any .git directory in the lib/generators
 remove_dir "lib/generators/.git"
 
+
+# setup the javascript
+remove_file "public/javascripts/rails.js" 
+get "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js",  "public/javascripts/jquery.js"
+get "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js", "public/javascripts/jquery-ui.js"
+get "http://github.com/rails/jquery-ujs/raw/master/src/rails.js", "public/javascripts/rails.js"
+
 # Let's setup the generators.
 # 
 # Template        -- HAML
@@ -86,23 +92,14 @@ generators = <<-GENERATORS
       g.test_framework      :shoulda, :fixture => true, :views => false
       g.fixture_replacement :factory_girl, :dir => "test/factories"
       g.mock_with           :mocha
-    end        
+    end
+    
+    # change the default javascript to use jquery, jquery-ui, and rails        
+    config.action_view.javascript_expansions[:defaults] = %w(jquery jquery-ui rails)
+        
 GENERATORS
 
 application generators
-
-# setup the javascript
-remove_file "public/javascripts/rails.js" 
-get "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js",  "public/javascripts/jquery.js"
-get "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js", "public/javascripts/jquery-ui.js"
-get "http://github.com/rails/jquery-ujs/raw/master/src/rails.js", "public/javascripts/rails.js"
-                      
-# setup the stylesheets
-# empty_directory "public/stylesheets/sass"
-
-# set the default javascript to jquery.
-gsub_file 'config/application.rb', '# config.action_view.javascript_expansions[:defaults] = %w(jquery rails)', 'config.action_view.javascript_expansions[:defaults] = %w(jquery rails)'
-
 
 #
 #  NOTE: need to add flash message partial, and also create a public view using the same layout
@@ -113,10 +110,6 @@ layout = <<-LAYOUT
 %html
   %head
     %title #{app_name.humanize}
-    = stylesheet_link_tag 'compiled/screen.css', :media => 'screen, projection'
-    = stylesheet_link_tag 'compiled/print.css', :media => 'print'
-    /[if lt IE 8]
-      = stylesheet_link_tag 'compiled/ie.css', :media => 'screen, projection'
     = javascript_include_tag :defaults
     = csrf_meta_tag
   %body{ :id => controller_name, :class => action_name }

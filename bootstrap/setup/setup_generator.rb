@@ -14,10 +14,16 @@ module Bootstrap
         overwrite_devise_settings                
         rake "test"  
 
-next_steps = <<-NEXTSTEPS
-Congratulations, your application is almost ready.  Run the following steps, answering Y to all questions.
-  
-% compass init rails #{Rails.root} --using blueprint/semantic 
+next_steps = <<-NEXTSTEPS                                             
+
+======================================================================
+Congratulations, your new app is all setup.  To start the server, run:
+
+% rails s                                                            
+
+Enjoy!
+=======================================================================
+
 NEXTSTEPS
 
         log next_steps
@@ -108,6 +114,11 @@ ROUTECONFIG
         template "app/helpers/resources_helper.rb", "app/helpers/#{@resource}_helper.rb"      
         template "app/mailers/resource_mailer.rb", "app/mailers/#{@resource.singularize}_mailer.rb"
         template "app/views/resource_mailer/welcome.html.haml", "app/views/#{@resource.singularize}_mailer/welcome.html.haml"
+        
+        %w( application public ).each do |layout|
+          remove_file "#{Rails.root}/app/views/layouts/#{layout}.html.haml"
+          template "app/views/layouts/#{layout}.html.haml", "app/views/layouts/#{layout}.html.haml"
+        end
 
 app_config = <<-APPCONFIG
   
