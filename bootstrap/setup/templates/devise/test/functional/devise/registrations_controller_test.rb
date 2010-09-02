@@ -215,6 +215,52 @@ class Devise::RegistrationsControllerTest < ActionController::TestCase
     
     
     context "with invalid attributes" do
+    
+      setup do
+        @<%= singular %> = Factory.create(:<%= singular %>)
+        sign_in( @<%= singular %> )
+        put :update, :<%= singular %> => {:email => "", :current_password => @<%= singular %>.password }
+      end
+      
+      should render_template(:edit) 
+      should render_with_layout(:application)
+
+      should "render appropriate view elements" do
+        assert_select "body#registrations.update" do
+          assert_select "h2", :text => I18n.t('registrations.update.header')          
+          assert_select "form[action='/<%= @resource %>']" do
+            assert_select "fieldset.inputs" do
+              assert_select "ol" do
+                assert_select "li#<%= singular %>_email_input.required" do
+                  assert_select "label[for='<%= singular %>_email']", :text => "#{I18n.t('activerecord.attributes.<%= singular %>.email')}*"
+                  assert_select "input[type='text'][name='<%= singular %>[email]']"                  
+                  assert_select "p.inline-errors"
+                end
+                assert_select "li#<%= singular %>_current_password_input.required" do
+                  assert_select "label[for='<%= singular %>_current_password']", :text => "#{I18n.t('activerecord.attributes.<%= singular %>.current_password')}*"
+                  assert_select "input[type='password'][name='<%= singular %>[current_password]']"                  
+                end
+                assert_select "li#<%= singular %>_password_input.optional" do
+                  assert_select "label[for='<%= singular %>_password']", :text => "#{I18n.t('activerecord.attributes.<%= singular %>.password')}"
+                  assert_select "input[type='password'][name='<%= singular %>[password]']"                  
+                end
+                assert_select "li#<%= singular %>_password_confirmation_input.optional" do
+                  assert_select "label[for='<%= singular %>_password_confirmation']", :text => "#{I18n.t('activerecord.attributes.<%= singular %>.password_confirmation')}"
+                  assert_select "input[type='password'][name='<%= singular %>[password_confirmation]']"                  
+                end
+              end
+            end
+            assert_select "fieldset.buttons" do
+              assert_select "ol" do
+                assert_select "li.commit" do
+                  assert_select "input[type='submit'][value='Update <%= singular.titleize %>']"
+                end
+              end
+            end
+          end
+        end        
+      end
+      
       
       
     end

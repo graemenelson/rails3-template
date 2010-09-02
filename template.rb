@@ -91,9 +91,12 @@ generators = <<-GENERATORS
     
     config.generators do |g|
       g.template_engine     :haml
-      g.test_framework      :shoulda, :fixture => true, :views => false
+      g.test_framework      :shoulda, :fixture => true, :views => false      
       g.fixture_replacement :factory_girl, :dir => "test/factories"
       g.mock_with           :mocha
+      
+      # fallbacks
+      g.fallbacks[:shoulda] = :test_unit
     end
     
     # change the default javascript to use jquery, jquery-ui, and rails        

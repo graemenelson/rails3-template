@@ -11,6 +11,7 @@ module Bootstrap
         setup_initial_configuration
         setup_initial_tests
         setup_initial_application
+        setup_initial_public
         overwrite_devise_settings                
         rake "test"  
 
@@ -134,6 +135,11 @@ APPCONFIG
         
         application app_config
         rake "db:migrate"       
+      end
+      
+      def setup_initial_public
+        template "public/stylesheets/public.css", "public/stylesheets/public.css"
+        template "public/stylesheets/application.css", "public/stylesheets/application.css"
       end
       
       def overwrite_devise_settings

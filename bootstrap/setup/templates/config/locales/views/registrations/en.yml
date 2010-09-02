@@ -4,7 +4,9 @@ en:
       header: "Sign Up"
       buttons:
         commit: "Create Your Account"
-    edit:
-      header: "Edit Your Account"
     create:
       <<: *NEW_REGISTRATION
+    edit: &EDIT_REGISTRATION
+      header: "Edit Your Account"
+    update:
+      <<: *EDIT_REGISTRATION
