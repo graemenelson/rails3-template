@@ -31,7 +31,7 @@ NEXTSTEPS
       end
       
       def self.banner
-        "rails generate bootstrap:#{generator_name} <account_class_name> [options]"
+        "rails generate bootstrap:#{generator_name} <account_class_name>"
       end
       
       private
