@@ -57,7 +57,7 @@ gem "mocha", ">= 0.9.8", :group => :test
 # Let's get the generators we want from rails generator, factory_girl, shoulda
 git :clone => "--depth 0 git://github.com/indirect/rails3-generators.git"
 empty_directory "lib"
-run             "cp -R rails3-generators/lib/generators lib"
+run             "cp -r rails3-generators/lib/generators lib"
 remove_file     "rails3-generators"
 
 generators_to_keep = %w(factory_girl formtastic helpers jquery shoulda)
@@ -69,7 +69,7 @@ end
 
 # Let's checkout the bootstrapping generator
 git :clone => "--depth 0 git://github.com/graemenelson/rails3-template.git"
-run "cp -R rails3-template/bootstrap* lib/generators"
+run "cp -r rails3-template/bootstrap* lib/generators"
 remove_file "rails3-template"                        
 
 # let's get rid of any .git directory in the lib/generators
