@@ -36,7 +36,8 @@ create_file ".rvmrc", rvmrc
 # Remove unnecessary files that rails creates for us.
 remove_file     "public/index.html"
 remove_file     "public/images/rails.png"
-remove_file     "public/javascripts/*"
+remove_file     "public/javascripts"
+empty_directory "public/javascripts"
 
 # Let's setup our gems used in all environments
 gem "haml", ">= 3.0.18"
