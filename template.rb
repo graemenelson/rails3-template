@@ -38,6 +38,7 @@ remove_file     "public/index.html"
 remove_file     "public/images/rails.png"
 remove_file     "public/javascripts"
 empty_directory "public/javascripts"
+create_file     "public/javascripts/application.js"
 
 # Let's setup our gems used in all environments
 gem "haml", ">= 3.0.18"
