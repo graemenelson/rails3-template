@@ -14,7 +14,7 @@ class Devise::PasswordsControllerTest < ActionController::TestCase
       should render_with_layout(:public)
       
       should "render appropriate view elements" do
-        assert_select "body#passwords.new" do
+        assert_select "body" do
           assert_select "h2", :text => I18n.t('passwords.new.header')
           assert_select "form[action='#{<%= singular %>_password_path}']" do
             assert_select "fieldset.inputs" do
@@ -100,7 +100,7 @@ class Devise::PasswordsControllerTest < ActionController::TestCase
        should render_with_layout(:application)
        
        should "render appropriate view elements" do
-         assert_select "body#passwords.edit" do
+         assert_select "body" do
            assert_select "h2", :text => I18n.t('passwords.edit.header')
            assert_select "form[action='#{<%= singular %>_password_path}']" do
              assert_select "fieldset.inputs" do

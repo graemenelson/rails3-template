@@ -17,7 +17,7 @@ class Devise::RegistrationsControllerTest < ActionController::TestCase
       should render_with_layout(:public)
 
       should "render appropriate view elements" do
-        assert_select "body#registrations.new" do
+        assert_select "body" do
           assert_select "h2", :text => I18n.t('registrations.new.header')
           assert_select "form[action='/<%= @resource %>']" do
             assert_select "fieldset.inputs" do
@@ -92,7 +92,7 @@ class Devise::RegistrationsControllerTest < ActionController::TestCase
       should render_with_layout(:public)
       
       should "render appropriate view elements" do
-        assert_select "body#registrations.create" do
+        assert_select "body" do
           assert_select "h2", :text => I18n.t('registrations.create.header')          
           assert_select "form[action='/<%= @resource %>']" do
             assert_select "div#error_explanation"
@@ -160,7 +160,7 @@ class Devise::RegistrationsControllerTest < ActionController::TestCase
       should render_with_layout(:application)
       
       should "render appropriate view elements" do
-        assert_select "body#registrations.edit" do
+        assert_select "body" do
           assert_select "h2", :text => I18n.t('registrations.edit.header')          
           assert_select "form[action='/<%= @resource %>']" do
             assert_select "fieldset.inputs" do
@@ -226,7 +226,7 @@ class Devise::RegistrationsControllerTest < ActionController::TestCase
       should render_with_layout(:application)
 
       should "render appropriate view elements" do
-        assert_select "body#registrations.update" do
+        assert_select "body" do
           assert_select "h2", :text => I18n.t('registrations.update.header')          
           assert_select "form[action='/<%= @resource %>']" do
             assert_select "fieldset.inputs" do

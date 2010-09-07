@@ -15,7 +15,7 @@ class Devise::SessionsControllerTest < ActionController::TestCase
       should render_with_layout(:public)
       
       should "render appropriate view elements" do
-        assert_select "body#sessions.new" do
+        assert_select "body" do
           assert_select "h2", :text => I18n.t('sessions.new.header')
           assert_select "form[action='#{new_<%= singular %>_session_path}']" do
             assert_select "fieldset.inputs" do
