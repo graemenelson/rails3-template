@@ -70,7 +70,7 @@ end
 # Let's checkout the bootstrapping generator
 git :clone => "--depth 0 git://github.com/graemenelson/rails3-template.git"
 run "cp -R rails3-template/bootstrap* lib/generators"
-remove_file "rails3_template"                        
+remove_file "rails3-template"                        
 
 # let's get rid of any .git directory in the lib/generators
 remove_dir "lib/generators/.git"
