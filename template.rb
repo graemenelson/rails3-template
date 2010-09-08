@@ -44,7 +44,7 @@ create_file     "public/javascripts/application.js"
 gem "haml", ">= 3.0.18"
 gem "haml-rails"
 gem "devise", :git => "git://github.com/plataformatec/devise.git"
-gem 'formtastic', :git => "git://github.com/justinfrench/formtastic.git", :branch => "rails3" 
+gem 'formtastic', ">= 1.1.0"
 
 # Let's setup the gems we only need for testing
 gem "shoulda", ">= 2.11.2", :group => :test
