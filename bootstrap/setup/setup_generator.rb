@@ -69,7 +69,7 @@ ROUTECONFIG
                 
         remove_file "#{Rails.root}/config/locales/en.yml"
         
-        template "config/locales/defaults/en.yml", "config/locales/defauls/en.yml"
+        template "config/locales/defaults/en.yml", "config/locales/defaults/en.yml"
         template "config/locales/models/en.yml", "config/locales/models/en.yml"
         template "config/locales/views/en.yml", "config/locales/views/en.yml"
         run "mv #{Rails.root}/config/locales/devise.en.yml #{Rails.root}/config/locales/devise/en.yml"
