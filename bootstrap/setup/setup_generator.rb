@@ -69,15 +69,10 @@ ROUTECONFIG
                 
         remove_file "#{Rails.root}/config/locales/en.yml"
         
-        # TODO: need to use template so we can substitute resource name
-        #remove_file "#{Rails.root}/config/locales"
-        %w( views defaults ).each do |dir|
-          run "cp -R #{self.class.source_root}/config/locales/#{dir} #{Rails.root}/config/locales/#{dir}"
-        end 
-        run "mkdir #{Rails.root}/config/locales/models"
-        #run "mkdir #{Rails.root}/config/locales/#{@resource.singularize}"
-        template "config/locales/models/resource/en.yml", "config/locales/models/#{@resource.singularize}/en.yml"
-        run "mv #{Rails.root}/config/locales/devise.en.yml #{Rails.root}/config/locales/defaults/devise.en.yml"
+        template "config/locales/defaults/en.yml", "config/locales/defauls/en.yml"
+        template "config/locales/models/en.yml", "config/locales/models/en.yml"
+        template "config/locales/views/en.yml", "config/locales/views/en.yml"
+        run "mv #{Rails.root}/config/locales/devise.en.yml #{Rails.root}/config/locales/devise/en.yml"
       end  
       
       # setups the initial tests, basic test to validate

@@ -1,0 +1,28 @@
+en:
+  passwords:
+    new:
+      header: "Reset Your Password"
+      buttons:
+        commit: "Reset"
+    edit:
+      header: "Update Your Password"
+      buttons:
+        commit: "Update Password"
+
+  registrations:
+    new: &NEW_REGISTRATION
+      header: "Sign Up"
+      buttons:
+        commit: "Create Your Account"
+    create:
+      <<: *NEW_REGISTRATION
+    edit: &EDIT_REGISTRATION
+      header: "Edit Your Account"
+    update:
+      <<: *EDIT_REGISTRATION        
+      
+  sessions:
+    new:
+      header: "Sign Into Your Account"
+      buttons:
+        commit: "Sign In"      
