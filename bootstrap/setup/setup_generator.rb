@@ -12,8 +12,7 @@ module Bootstrap
         setup_initial_tests
         setup_initial_application
         setup_initial_public
-        overwrite_devise_settings                
-        rake "test"  
+        overwrite_devise_settings                  
 
 next_steps = <<-NEXTSTEPS                                             
 
