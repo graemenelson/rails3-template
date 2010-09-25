@@ -43,7 +43,7 @@ create_file     "public/javascripts/application.js"
 # Let's setup our gems used in all environments
 gem "haml", ">= 3.0.18"
 gem "haml-rails"
-gem "devise", :git => "git://github.com/plataformatec/devise.git"
+gem "devise", ">= 1.1.3"
 gem 'formtastic', ">= 1.1.0"
 
 # Let's setup the gems we only need for testing

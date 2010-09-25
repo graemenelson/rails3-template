@@ -49,6 +49,7 @@ NEXTSTEPS
         gsub_file "#{Rails.root}/config/routes.rb", "devise_for :#{@resource}", ""
         
 routeconfig = <<-ROUTECONFIG
+
   devise_for :#{@resource}, :path_names => { :sign_in => 'signin', :sign_out => 'signout', :sign_up => 'signup' }
   as :#{@resource.singularize} do
     get "/signup" => "devise/registrations#new"
